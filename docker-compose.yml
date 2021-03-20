@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  php:
+    build:
+      context: ./
+      dockerfile: php.dockerfile
+    user: application
+    ports: 
+      - 80:80
+      - 443:443
+      - 9000:9000
+    volumes: 
+      - ./src:/app
+
+  mariadb:
+    image: mariadb:10.5.9-focal
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: nextcloud
+
+  adminer:
+    image: adminer:4.8.0-standalone
+    restart: always
+    ports:
+      - 8080:8080
